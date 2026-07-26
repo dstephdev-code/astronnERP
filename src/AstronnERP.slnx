@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/AstronnERP.Tests/" />
+  <Folder Name="/AstronnERP.Tests/Domain.UnitTests/">
+    <Project Path="AstronnERP.Tests/Domain.UnitTests/AstronnERP.Domain.UnitTests.csproj" />
+  </Folder>
   <Project Path="AstronnERP.Domain/AstronnERP.Domain.csproj" />
 </Solution>
