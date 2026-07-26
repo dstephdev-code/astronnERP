@@ -17,6 +17,6 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public DateTimeOffset UpdatedLastTime { get; private set; }
 
-        public String? Comment { get; private set; }
+        public string? Comment { get; private set; }
     }
 }

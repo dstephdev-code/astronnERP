@@ -10,13 +10,13 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public CountryCode CountryCode { get; init; }
 
-        public String FullName { get; private set; } = String.Empty;
+        public string FullName { get; private set; } = String.Empty;
 
-        public String? FullNameEnglish { get; private set; }
+        public string? FullNameEnglish { get; private set; }
 
-        public String? TaxNumber { get; private set; }
+        public string? TaxNumber { get; private set; }
 
-        public String? KPP { get; private set; }
+        public string? KPP { get; private set; }
 
         // IEnumerable for product list
     }

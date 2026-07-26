@@ -5,6 +5,6 @@
     {
         public Guid Id { get; init; }
 
-        public String Name { get; private set; } = String.Empty;
+        public string Name { get; private set; } = String.Empty;
     }
 }

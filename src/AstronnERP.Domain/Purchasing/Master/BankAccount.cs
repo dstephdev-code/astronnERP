@@ -8,14 +8,14 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Guid OwnerId { get; init; }
 
-        public String AccountNumber { get; private set; }
+        public string AccountNumber { get; private set; }
 
         public Currency Currency { get; init; }
 
-        public String BankLegalName { get; private set; }
+        public string BankLegalName { get; private set; }
 
-        public String? BIK { get; private set; }
+        public string? BIK { get; private set; }
 
-        public String? SWIFT { get; private set; }
+        public string? SWIFT { get; private set; }
     }
 }

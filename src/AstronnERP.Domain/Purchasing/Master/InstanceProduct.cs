@@ -8,7 +8,7 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Guid ProductId { get; init; }
 
-        public String SerialNumber { get; init; } = String.Empty;
+        public string SerialNumber { get; init; } = String.Empty;
 
         public InstanceStatus Status { get; private set; }
 

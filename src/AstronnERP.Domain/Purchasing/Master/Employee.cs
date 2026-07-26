@@ -7,7 +7,7 @@ namespace AstronnERP.Domain.Purchasing.Master
     {
         public Guid Id { get; init; }
 
-        public String Name { get; private set; } = String.Empty;
+        public string Name { get; private set; } = String.Empty;
 
         public Department Department { get; private set; }
     }
