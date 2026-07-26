@@ -3,7 +3,7 @@ using FluentResults;
 
 namespace AstronnERP.Domain.SharedObjects.ValueObjects
 {
-    public sealed record Price
+    public readonly record struct Price
     {
         public decimal Value { get; init; }
         public Currency Currency { get; init; }
@@ -22,12 +22,12 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
                 Result.FailIf(!Enum.IsDefined<Currency>(currency), "Currency must be of expected list."),
             };
 
-            Result isFailed = failures.Merge();
+            Result failureCheck = failures.Merge();
 
-            if (isFailed.IsFailed)
-                return isFailed;
+            if (failureCheck.IsFailed)
+                return failureCheck;
             else
-                return Result.Ok<Price>(new Price(value, currency));
+                return Result.Ok(new Price(value, currency));
         }
     }
 }
