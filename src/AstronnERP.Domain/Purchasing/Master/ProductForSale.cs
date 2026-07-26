@@ -1,6 +1,6 @@
 ﻿using AstronnERP.Domain.SharedObjects.ValueObjects;
 
-namespace AstronnERP.Domain.Purchasing
+namespace AstronnERP.Domain.Purchasing.Master
 {
     /* Вроде как отдельное Entity. */
     public class ProductForSale

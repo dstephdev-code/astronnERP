@@ -1,4 +1,4 @@
-﻿namespace AstronnERP.Domain.Purchasing.Enums
+﻿namespace AstronnERP.Domain.Purchasing.Master.Enums
 {
     public enum CountryCode
     {

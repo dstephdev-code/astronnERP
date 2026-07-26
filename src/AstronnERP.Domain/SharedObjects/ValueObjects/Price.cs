@@ -1,4 +1,5 @@
 ﻿using AstronnERP.Domain.SharedObjects.Enums;
+using FluentResults;
 
 namespace AstronnERP.Domain.SharedObjects.ValueObjects
 {
@@ -13,15 +14,20 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
             Currency = currency;
         }
 
-        public static (Price?, string?) Create(decimal value, Currency currency)
+        public static Result<Price> Create(decimal value, Currency currency)
         {
-            if (value <= 0)
-                return (null, "Value error!");
+            var failures = new List<Result>
+            {
+                Result.FailIf(value <= 0, "Price must be greater than zero."),
+                Result.FailIf(!Enum.IsDefined<Currency>(currency), "Currency must be of expected list."),
+            };
 
-            if (Enum.IsDefined<Currency>(currency))
-                return (null, "Currency error!");
+            Result isFailed = failures.Merge();
 
-            return (new Price(value, currency), null);
+            if (isFailed.IsFailed)
+                return isFailed;
+            else
+                return Result.Ok<Price>(new Price(value, currency));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AstronnERP.Domain.SharedObjects.Enums;
 
-namespace AstronnERP.Domain.Purchasing
+namespace AstronnERP.Domain.Purchasing.Master
 {
     public class BankAccount
     {
@@ -10,7 +10,7 @@ namespace AstronnERP.Domain.Purchasing
 
         public String AccountNumber { get; private set; }
 
-        public Currency Currency { get; private set; }
+        public Currency Currency { get; init; }
 
         public String BankLegalName { get; private set; }
 
