@@ -3,15 +3,13 @@ using AstronnERP.Domain.SharedObjects.Enums;
 
 namespace AstronnERP.Domain.UnitTests;
 
-public class Purchasing_Price
+public class Shared_Price
 {
     [Fact]
     public void Price_WhenValueBelowZero_ShouldReturnIsFailedTrue()
     {
-        // Assign and Act
         var result = Price.Create(-10, Currency.USD);
 
-        // Assert
         Assert.IsNotType<Price>(result);
         Assert.True(result.IsFailed);
         Assert.Single(result.Errors);
@@ -21,7 +19,7 @@ public class Purchasing_Price
     [Fact]
     public void Price_WhenCurrencyIsNotInEnum_ShouldReturnIsFailedTrue()
     {
-        var result = Price.Create(10, (Currency)5);
+        var result = Price.Create(10, (Currency)999);
 
         Assert.IsNotType<Price>(result);
         Assert.True(result.IsFailed);
@@ -32,7 +30,7 @@ public class Purchasing_Price
     [Fact]
     public void Price_WhenBothValueAndCurrencyWrong_ShouldReturnTwoErrors()
     {
-        var result = Price.Create(-10, (Currency)5);
+        var result = Price.Create(-10, (Currency)999);
 
         Assert.IsNotType<Price>(result);
         Assert.True(result.IsFailed);
