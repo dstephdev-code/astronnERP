@@ -1,4 +1,5 @@
 ﻿using AstronnERP.Domain.Purchasing.Master.Enums;
+using AstronnERP.Domain.SharedObjects.ValueObjects;
 
 namespace AstronnERP.Domain.Purchasing.Master
 {
@@ -8,7 +9,7 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Guid ProductId { get; init; }
 
-        public string SerialNumber { get; init; } = String.Empty;
+        public NonEmptyString SerialNumber { get; init; }
 
         public InstanceStatus Status { get; private set; }
 

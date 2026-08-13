@@ -1,4 +1,5 @@
 ﻿using AstronnERP.Domain.Purchasing.Master.Enums;
+using AstronnERP.Domain.SharedObjects.ValueObjects;
 
 namespace AstronnERP.Domain.Purchasing.Master
 {
@@ -10,13 +11,13 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public CountryCode CountryCode { get; init; }
 
-        public string FullName { get; private set; } = String.Empty;
+        public NonEmptyString FullName { get; private set; }
 
-        public string? FullNameEnglish { get; private set; }
+        public NonEmptyString? FullNameEnglish { get; private set; }
 
-        public string? TaxNumber { get; private set; }
+        public NonEmptyString? TaxNumber { get; private set; }
 
-        public string? KPP { get; private set; }
+        public NonEmptyString? KPP { get; private set; }
 
         // IEnumerable for product list
     }

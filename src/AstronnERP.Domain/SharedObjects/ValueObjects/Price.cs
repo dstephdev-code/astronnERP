@@ -19,7 +19,7 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
             var failures = new List<Result>
             {
                 Result.FailIf(value <= 0, "Price must be greater than zero."),
-                Result.FailIf(!Enum.IsDefined<Currency>(currency), "Currency must be of expected list."),
+                Result.FailIf(!Enum.IsDefined(currency), "Currency must be of expected list."),
             };
 
             Result failureCheck = failures.Merge();

@@ -1,4 +1,5 @@
 ﻿using AstronnERP.Domain.SharedObjects.Enums;
+using AstronnERP.Domain.SharedObjects.ValueObjects;
 
 namespace AstronnERP.Domain.Purchasing.Master
 {
@@ -7,7 +8,7 @@ namespace AstronnERP.Domain.Purchasing.Master
     {
         public Guid Id { get; init; }
 
-        public string Name { get; private set; } = String.Empty;
+        public NonEmptyString Name { get; private set; }
 
         public Department Department { get; private set; }
     }

@@ -5,7 +5,7 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
 {
     public readonly record struct NonEmptyString
     {
-        public string Value { get; }
+        public string Value { get; init; }
 
         private NonEmptyString(string value) => Value = value;
 
@@ -13,7 +13,7 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
         {
             var trimedValue = value?.Trim();
 
-            if (String.IsNullOrEmpty(trimedValue))
+            if (string.IsNullOrEmpty(trimedValue))
                 return Result.Fail(new PropertyIsEmpty(propertyName));
 
             return Result.Ok(new NonEmptyString(trimedValue));

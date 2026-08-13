@@ -36,7 +36,7 @@ namespace AstronnERP.Domain.Purchasing.Master
         public Result ChangeName(string newName)
         {
             var newNameResult = NonEmptyString.Create(newName, nameof(Name));
-            var isSameValue = newNameResult.IsSuccess && String.Equals(newNameResult.Value.Value, Name.Value);
+            var isSameValue = newNameResult.IsSuccess && string.Equals(newNameResult.Value.Value, Name.Value);
 
             var failureCheck = Result.Merge(
                 newNameResult,
@@ -51,7 +51,7 @@ namespace AstronnERP.Domain.Purchasing.Master
         public Result ChangeCode(string newCode)
         {
             var newCodeResult = NonEmptyString.Create(newCode, nameof(Code));
-            var isSameValue = newCodeResult.IsSuccess && String.Equals(newCodeResult.Value.Value, Code.Value);
+            var isSameValue = newCodeResult.IsSuccess && string.Equals(newCodeResult.Value.Value, Code.Value);
 
             var failureCheck = Result.Merge(
                 newCodeResult,
