@@ -13,10 +13,12 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Price Price { get; private set; }
 
-        public int StockQuantity { get; private set; }
+        public Quantity StockQuantity { get; private set; }
 
         public DateTimeOffset UpdatedLastTime { get; private set; }
 
         public string? Comment { get; private set; }
+
+        private void UpdateData() => UpdatedLastTime = DateTimeOffset.UtcNow;
     }
 }
