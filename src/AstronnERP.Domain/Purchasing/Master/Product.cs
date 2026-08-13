@@ -23,43 +23,46 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public static Result<Product> CreateNew(string name, string code, bool isService, bool hasSerialNumber)
         {
-            var nameResult = NonEmptyString.Create(name, nameof(Name));
-            var codeResult = NonEmptyString.Create(code, nameof(Code));
+            var nameValidationResult = NonEmptyString.Create(name, nameof(Name));
+            var codeValidationResult = NonEmptyString.Create(code, nameof(Code));
 
-            var failureCheck = Result.Merge(nameResult, codeResult);
+            var serviceDontHaveSerialRule = 
+                Result.FailIf(isService && hasSerialNumber, "Services dont have serial number.");
+
+            var failureCheck = Result.Merge(nameValidationResult, codeValidationResult, serviceDontHaveSerialRule);
 
             if (failureCheck.IsFailed)
                 return failureCheck.ToResult();
 
-            return Result.Ok(new Product(nameResult.Value, codeResult.Value, isService, hasSerialNumber));
+            return Result.Ok(new Product(nameValidationResult.Value, codeValidationResult.Value, isService, hasSerialNumber));
         }
         public Result ChangeName(string newName)
         {
-            var newNameResult = NonEmptyString.Create(newName, nameof(Name));
-            var isSameValue = newNameResult.IsSuccess && string.Equals(newNameResult.Value.Value, Name.Value);
+            var newNameValidationResult = NonEmptyString.Create(newName, nameof(Name));
+            var isSameValue = newNameValidationResult.IsSuccess && string.Equals(newNameValidationResult.Value.Value, Name.Value);
 
             var failureCheck = Result.Merge(
-                newNameResult,
+                newNameValidationResult,
                 Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(Name)))
             );
 
             if (failureCheck.IsSuccess)
-                Name = newNameResult.Value;
+                Name = newNameValidationResult.Value;
 
             return failureCheck.ToResult();
         }
         public Result ChangeCode(string newCode)
         {
-            var newCodeResult = NonEmptyString.Create(newCode, nameof(Code));
-            var isSameValue = newCodeResult.IsSuccess && string.Equals(newCodeResult.Value.Value, Code.Value);
+            var newCodeValidationResult = NonEmptyString.Create(newCode, nameof(Code));
+            var isSameValue = newCodeValidationResult.IsSuccess && string.Equals(newCodeValidationResult.Value.Value, Code.Value);
 
             var failureCheck = Result.Merge(
-                newCodeResult,
+                newCodeValidationResult,
                 Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(Code)))
             );
 
             if (failureCheck.IsSuccess)
-                Code = newCodeResult.Value;
+                Code = newCodeValidationResult.Value;
 
             return failureCheck.ToResult();
         }

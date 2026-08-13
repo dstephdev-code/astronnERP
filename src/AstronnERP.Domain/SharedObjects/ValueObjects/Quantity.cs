@@ -17,15 +17,12 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
 
         public static Result<Quantity> Create(float value, QuantityType type)
         {
-            var failures = new List<Result>
-            {
+            var failureCheck = Result.Merge(
                 Result.FailIf(!float.IsFinite(value), "Quantity should be finite number."),
                 Result.FailIf(Math.Abs(value) < RATIONAL_FINITY_BORDER, $"Quantity value must be greater than {RATIONAL_FINITY_BORDER:F8}."),
                 Result.FailIf(value < 0, "Quantity must be greater than zero."),
-                Result.FailIf(!Enum.IsDefined(type), "Type must be of expected list."),
-            };
-
-            Result failureCheck = failures.Merge();
+                Result.FailIf(!Enum.IsDefined(type), "Type must be of expected list.")
+            );
 
             if (failureCheck.IsFailed)
                 return failureCheck;
@@ -35,14 +32,10 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
 
         public static Result<Quantity> Create(int value, QuantityType type)
         {
-
-            var failures = new List<Result>
-            {
+            var failureCheck = Result.Merge(
                 Result.FailIf(value <= 0, "Quantity must be greater than zero."),
-                Result.FailIf(!Enum.IsDefined(type), "Type must be of expected list."),
-            };
-
-            Result failureCheck = failures.Merge();
+                Result.FailIf(!Enum.IsDefined(type), "Type must be of expected list.")
+            );
 
             if (failureCheck.IsFailed)
                 return failureCheck;

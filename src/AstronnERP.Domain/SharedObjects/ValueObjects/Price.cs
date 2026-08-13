@@ -16,13 +16,10 @@ namespace AstronnERP.Domain.SharedObjects.ValueObjects
 
         public static Result<Price> Create(decimal value, Currency currency)
         {
-            var failures = new List<Result>
-            {
+            Result failureCheck = Result.Merge(
                 Result.FailIf(value <= 0, "Price must be greater than zero."),
-                Result.FailIf(!Enum.IsDefined(currency), "Currency must be of expected list."),
-            };
-
-            Result failureCheck = failures.Merge();
+                Result.FailIf(!Enum.IsDefined(currency), "Currency must be of expected list.")
+            );
 
             if (failureCheck.IsFailed)
                 return failureCheck;
