@@ -1,4 +1,5 @@
 ﻿using AstronnERP.Domain.SharedObjects.Enums;
+using AstronnERP.Domain.SharedObjects.ValueObjects;
 
 namespace AstronnERP.Domain.Purchasing.Master
 {
@@ -8,14 +9,14 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Guid OwnerId { get; init; }
 
-        public string AccountNumber { get; private set; }
+        public NonEmptyString AccountNumber { get; private set; }
 
         public Currency Currency { get; init; }
 
-        public string BankLegalName { get; private set; }
+        public NonEmptyString BankLegalName { get; private set; }
 
-        public string? BIK { get; private set; }
+        public NonEmptyString? BIK { get; private set; }
 
-        public string? SWIFT { get; private set; }
+        public NonEmptyString? SWIFT { get; private set; }
     }
 }
