@@ -5,7 +5,6 @@
         InReceiving,
         InStock,
         Issued,
-        Component,
         ReturnedToVendor
     }
 }
