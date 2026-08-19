@@ -19,7 +19,7 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
             Type = CounterpartyType.NaturalPerson;
         }
 
-        public Result<RussianNaturalPersonDetails> Create(string taxNumber)
+        public static Result<RussianNaturalPersonDetails> Create(string taxNumber)
         {
             var taxNumberNES = NonEmptyString.Create(taxNumber, nameof(TaxNumber));
 
@@ -40,9 +40,13 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
 
             var failureCheck = Result.Merge(
                 newTaxNumberValidationResult,
-                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber))),
-                Result.FailIf(!AccountValidator.IsThisPersonalINN(newTaxNumberValidationResult.Value), "INN is invalid.")
+                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber)))
             );
+
+            if (!failureCheck.IsSuccess)
+                return failureCheck.ToResult();
+
+            failureCheck = Result.FailIf(!AccountValidator.IsThisPersonalINN(newTaxNumberValidationResult.Value), "INN is invalid.");
 
             if (failureCheck.IsSuccess)
                 TaxNumber = newTaxNumberValidationResult.Value;

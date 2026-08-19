@@ -19,7 +19,7 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
             CountryCode = CountryCode.RUS;
             Type = CounterpartyType.LegalEntity;
         }
-        public Result<RussianLegalEntityDetails> Create(string taxNumber, string kpp)
+        public static Result<RussianLegalEntityDetails> Create(string taxNumber, string kpp)
         {
             var taxNumberNES = NonEmptyString.Create(taxNumber, nameof(TaxNumber));
             var kppNumberNES = NonEmptyString.Create(kpp, nameof(KPP));
@@ -46,9 +46,13 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
 
             var failureCheck = Result.Merge(
                 newTaxNumberValidationResult,
-                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber))),
-                Result.FailIf(!AccountValidator.IsThisCompanyINN(newTaxNumberValidationResult.Value), "INN is invalid.")
+                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber)))
             );
+
+            if (!failureCheck.IsSuccess)
+                return failureCheck.ToResult();
+
+            failureCheck = Result.FailIf(!AccountValidator.IsThisCompanyINN(newTaxNumberValidationResult.Value), "INN is invalid.");
 
             if (failureCheck.IsSuccess)
                 TaxNumber = newTaxNumberValidationResult.Value;
@@ -62,9 +66,13 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
 
             var failureCheck = Result.Merge(
                 newKPPNumberValidationResult,
-                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(KPP))),
-                Result.FailIf(!AccountValidator.IsThisKPP(newKPPNumberValidationResult.Value), "KPP is invalid.")
+                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(KPP)))
             );
+
+            if (!failureCheck.IsSuccess)
+                return failureCheck.ToResult();
+
+            failureCheck = Result.FailIf(!AccountValidator.IsThisKPP(newKPPNumberValidationResult.Value), "KPP is invalid.");
 
             if (failureCheck.IsSuccess)
                 KPP = newKPPNumberValidationResult.Value;

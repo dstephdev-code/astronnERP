@@ -21,7 +21,7 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
             Type = type;
         }
 
-        public Result<ForeignEntityDetails> Create(string name, string taxNumber, CountryCode countryCode, CounterpartyType type)
+        public static Result<ForeignEntityDetails> Create(string name, string taxNumber, CountryCode countryCode, CounterpartyType type)
         {
             var nameNES = NonEmptyString.Create(name, nameof(FullNameEnglish));
             var taxNumberNES = NonEmptyString.Create(taxNumber, nameof(TaxNumber));
@@ -50,9 +50,13 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
 
             var failureCheck = Result.Merge(
                 newNameValidationResult,
-                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(FullNameEnglish))),
-                Result.FailIf(!AccountValidator.IsNameOnlyEnglishLetters(newNameValidationResult.Value), "Name should contain only latin alphabet letters.")
+                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(FullNameEnglish)))
             );
+
+            if (!failureCheck.IsSuccess)
+                return failureCheck.ToResult();
+
+            failureCheck = Result.FailIf(!AccountValidator.IsNameOnlyEnglishLetters(newNameValidationResult.Value), "Name should contain only latin alphabet letters.");
 
             if (failureCheck.IsSuccess)
                 FullNameEnglish = newNameValidationResult.Value;
@@ -66,9 +70,13 @@ namespace AstronnERP.Domain.Purchasing.Master.Counterparties
 
             var failureCheck = Result.Merge(
                 newTaxNumberValidationResult,
-                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber))),
-                Result.FailIf(!AccountValidator.IsThisTaxNumber(newTaxNumberValidationResult.Value), "Tax number is invalid.")
+                Result.FailIf(isSameValue, new PropertyValueIsTheSame(nameof(TaxNumber)))
             );
+
+            if (!failureCheck.IsSuccess)
+                return failureCheck.ToResult();
+
+            failureCheck = Result.FailIf(!AccountValidator.IsThisTaxNumber(newTaxNumberValidationResult.Value), "Tax number is invalid.");
 
             if (failureCheck.IsSuccess)
                 TaxNumber = newTaxNumberValidationResult.Value;
