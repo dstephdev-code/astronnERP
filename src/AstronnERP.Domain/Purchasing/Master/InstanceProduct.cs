@@ -18,17 +18,16 @@ namespace AstronnERP.Domain.Purchasing.Master
 
         public Guid? IssuedToId { get; private set; }
 
-        private InstanceProduct(Guid productId, NonEmptyString serialNumber, Guid warehouseId)
+        private InstanceProduct(Guid productId, NonEmptyString serialNumber)
         {
             Id = Guid.CreateVersion7();
             ProductId = productId;
             SerialNumber = serialNumber;
             Status = InstanceStatus.InReceiving;
-            WarehouseId = warehouseId;
             IssuedToId = null;
         }
 
-        public static Result<InstanceProduct> RegisterNew(Product product, string serialNumber, Warehouse warehouse)
+        public static Result<InstanceProduct> RegisterNew(Product product, string serialNumber)
         {
             var isSerialProduct = Result.FailIf(!product.HasSerialNumber, "To register serial product it should have valid property.");
             var serialNumberValidationResult = NonEmptyString.Create(serialNumber, nameof(SerialNumber));
@@ -38,14 +37,15 @@ namespace AstronnERP.Domain.Purchasing.Master
             if (failureCheck.IsFailed)
                 return failureCheck.ToResult();
 
-            return Result.Ok(new InstanceProduct(product.Id, serialNumberValidationResult.Value, warehouse.Id));
+            return Result.Ok(new InstanceProduct(product.Id, serialNumberValidationResult.Value));
         }
 
-        public Result AddToStock()
+        public Result AddToStock(Warehouse warehouse)
         {
             if (Status != InstanceStatus.InReceiving)
                 return Result.Fail("You can manually add product to the stock only after registration.");
 
+            WarehouseId = warehouse.Id;
             Status = InstanceStatus.InStock;
             return Result.Ok();
         }
@@ -69,6 +69,7 @@ namespace AstronnERP.Domain.Purchasing.Master
 
             IssuedToId = employee.Id;
             WarehouseId = null;
+            Status = InstanceStatus.Issued;
             return Result.Ok();
         }
 
@@ -79,6 +80,7 @@ namespace AstronnERP.Domain.Purchasing.Master
 
             IssuedToId = null;
             WarehouseId = warehouse.Id;
+            Status = InstanceStatus.InStock;
             return Result.Ok();
         }
 
