@@ -11,5 +11,6 @@ namespace AstronnERP.Domain.Purchasing.Master.Services
         public static bool IsThisPersonalINN(NonEmptyString validatingProperty) => Regex.IsMatch(validatingProperty.Value, @"^[0-9]{12}$");
         public static bool IsThisTaxNumber(NonEmptyString validatingProperty) => Regex.IsMatch(validatingProperty.Value, @"^[0-9]$");
         public static bool IsNameOnlyEnglishLetters(NonEmptyString validatingProperty) => Regex.IsMatch(validatingProperty.Value, @"^[a-zA-Z]$");
+        public static bool IsThisBankAccountNumber(NonEmptyString validatingProperty) => Regex.IsMatch(validatingProperty.Value, @"^[0-9]$");
     }
 }
