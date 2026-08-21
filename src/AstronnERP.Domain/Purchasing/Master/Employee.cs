@@ -5,7 +5,6 @@ using FluentResults;
 
 namespace AstronnERP.Domain.Purchasing.Master
 {
-    /* Тоже самое. Потом будем подгружать только то что нужно из модуля по отделу кадров. */
     public class Employee
     {
         public Guid Id { get; init; }
@@ -50,7 +49,7 @@ namespace AstronnERP.Domain.Purchasing.Master
             return failureCheck.ToResult();
         }
 
-        // TransferTo()?
+        // TODO TransferTo()?
         public Result ChangeDepartment(Department newDepartment) 
         {
             var newDepartmentValidationResult = Result.FailIf(!Enum.IsDefined(newDepartment), "Department must be of expected list.");
